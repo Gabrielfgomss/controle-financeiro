@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../projeto newtab/style/reset.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../projeto newtab/style/reset.css">
+    <link rel="stylesheet" href="../projeto newtab/style.css">
+
+    <title>Document</title>
+</head>
+<body>
+    <header class="cabecalho">
+        <section class="container">
+            <div class="container__cabecalho">
+                <div class="container__logo">
+                    <img src="../projeto newtab/img/Ellipse 13.png" alt="Logo" class="imagem__logo">
+                    <p>Controle financeiro</p>
+                </div>
+                <ul class="container__menu">
+                    <li class="menu--itema"><a href="#">Cadastro de transações</a></li>
+                    <li class="menu--itemb"><a href="#">Limpar dados</a></li>
+                </ul>
+                <button class="botao__menulateral"><img src="../projeto newtab/img/menu.png" alt="Menu lateral"></button> 
+            </div>
+            <div class="menu__lateral">
+                <img src="../projeto newtab/img/Vector.png" alt="Botão fechar" class="botao__fechar-img">
+                <a href="#" class="menulateral-opcoes">Cadastro de transações</a>
+                <a href="#" class="menulateral-opcoes">Limpar dados</a>
+            </div>
+        </section>
+    </header>
+    <section class="container container__transacao">    
+        <div class="div__compra">
+                <h1 class="titulo__compra">Nova transação</h1>
+                <ul class="lista__input">
+                    <li class="listainput--select">
+                        <p>Tipo de transação</p>
+                        <select class="select--transacao" required>                 
+                            <option value="compra">Compra</option>                 
+                            <option value="venda">Venda</option>             
+                        </select>
+                    </li>
+                    <li class="listainput__produto">
+                            <p>Nome da mercadoria</p>
+                            <input type="text" class="listainput__text" placeholder="Input">
+                    </li>
+                    <li class="listainput__valor">
+                            <p>Valor</p>
+                            <input type="text" class="listainput__text" placeholder="R$ 0,00">
+                    </li>
+                </ul> 
+                    <button class="botao__comprar">Adicionar transação</button>
+        </div>
+        <div class="div__extrato">
+            <h1 class="titulo__extrato">Extrato de transações</h1>
+            <div class="listasubtitulo__extrato">
+                <p class="subtitulo-mercadoria">Mercadoria</p>
+                <p class="subtitulo-valor">Valor</p>
+            </div>
+            <div class="container__lista"> 
+                <ul class="linha">
+                    <li><p class="operador">+</p></li>
+                    <li><p class="produto">Lorem ipsum dolor sit amet consectetur</p></li>
+                    <li><p class="valor">R$ 12.999,99</p></li>
+                </ul>
+                <ul class="linha">
+                    <li><p class="operador">-</p></li>
+                    <li><p class="produto">Quis nostrud exercitation</p></li>
+                    <li><p class="valor">R$ 99,99</p></li>
+                </ul>
+                <ul class="linha">
+                    <li><p class="operador">+</p></li>
+                    <li><p class="produto">Lorem ipsum</p></li>
+                    <li><p class="valor">R$ 9,99</p></li>  
+                </ul> 
+            </div>
+            <div class="lista__resultado">
+                <p class="titulo-total">Total</p>
+                <p class="titulo-valor">R$ 12.909,99</p> 
+            </div> 
+            <p class="titulo-saldo">[LUCRO]</p> 
+        </div>
+    </section>
+    <script src="../projeto newtab/index.js"></script>
+
+</body>
+</html>
