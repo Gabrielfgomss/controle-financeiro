@@ -20,16 +20,12 @@
                     <img src="img/Ellipse 13.png" alt="Logo" class="imagem__logo">
                     <p>Controle financeiro</p>
                 </div>
-                <ul class="container__menu">
-                    <li class="menu--itema"><a href="#">Cadastro de transações</a></li>
-                    <li class="menu--itemb"><a href="#">Limpar dados</a></li>
-                </ul>
+                <div class="container__menu">
+                    <img src="img/Vector.png" alt="Botão fechar" class="botao__fechar-img">
+                    <a href="#" class="menu-link borda">Cadastro de transações</a></li>
+                    <a href="#" class="menu-link">Limpar dados</a>
+                </div>
                 <button class="botao__menulateral"><img src="img/menu.png" alt="Menu lateral"></button> 
-            </div>
-            <div class="menu__lateral">
-                <img src="img/Vector.png" alt="Botão fechar" class="botao__fechar-img">
-                <a href="#" class="menulateral-opcoes">Cadastro de transações</a>
-                <a href="#" class="menulateral-opcoes">Limpar dados</a>
             </div>
         </section>
     </header>
@@ -37,27 +33,27 @@
         <div class="div__compra">
                 <h1 class="titulo__compra">Nova transação</h1>
                 <ul class="lista__input">
-                    <li class="listainput--select">
+                    <li class="inputs">
                         <p>Tipo de transação</p>
                         <select class="select--transacao" required>                 
                             <option value="compra">Compra</option>                 
                             <option value="venda">Venda</option>             
                         </select>
                     </li>
-                    <li class="listainput__produto">
-                            <p>Nome da mercadoria</p>
-                            <input type="text" class="listainput__text" placeholder="Input">
+                    <li class="inputs">
+                        <p>Nome da mercadoria</p>
+                        <input type="text" class="input--text mercadoria" placeholder="Input">
                     </li>
-                    <li class="listainput__valor">
-                            <p>Valor</p>
-                            <input type="text" class="listainput__text" placeholder="R$ 0,00">
+                    <li class="inputs">
+                        <p>Valor</p>
+                        <input type="text" class="input--text input-valor" placeholder="R$ 0,00">
                     </li>
                 </ul> 
-                    <button class="botao__comprar">Adicionar transação</button>
+                <button class="botao__comprar">Adicionar transação</button>
         </div>
         <div class="div__extrato">
             <h1 class="titulo__extrato">Extrato de transações</h1>
-            <div class="listasubtitulo__extrato">
+            <div class="subtitulo__extrato">
                 <p class="subtitulo-mercadoria">Mercadoria</p>
                 <p class="subtitulo-valor">Valor</p>
             </div>
@@ -78,11 +74,11 @@
                     <li><p class="valor">R$ 9,99</p></li>  
                 </ul> 
             </div>
-            <div class="lista__resultado">
-                <p class="titulo-total">Total</p>
-                <p class="titulo-valor">R$ 12.909,99</p> 
+            <div class="total">
+                <p class="subtitulo-total">Total</p>
+                <p class="resultado">R$ 12.909,99</p> 
             </div> 
-            <p class="titulo-saldo">[LUCRO]</p> 
+            <p class="saldo">[LUCRO]</p> 
         </div>
     </section>
     <script src="index.js"></script>

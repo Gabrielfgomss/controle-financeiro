@@ -31,37 +31,38 @@ body {
 
 .container__logo {
     display: flex;
-    gap: 1em;
+    gap: 20px;
     align-items: center;
 }
 
 .container__menu {
     display: flex;
     background-color: #FFFFFF;
-    padding: 1em;
     align-items: center;
     font-size: 16px;
+    height: 40px;
+    width: 350px;
+    align-items: center;
+    justify-content: center;
 }
 
-.container__menu li {
-    padding: 0em 0.5em;
-}
-
-.container__menu a {
+.menu-link {
+    text-align: center;
+    padding: 0px 8px;
     text-decoration: none;
     color: var(--cor-da-fonte);
-}
-
-.menu--itema {
-    border-right: 1px solid #333333;
 }
 
 .botao__menulateral {
     display: none;
 }
 
-.menu__lateral {
+.botao__fechar-img {
     display: none;
+}
+
+.borda {
+    border-right: 1px solid #333333;
 }
 
 .container__transacao {
@@ -73,12 +74,12 @@ body {
 }
 
 .div__compra {
-    padding: 1.3em;
+    padding: 20px;
     border: 1px solid #979797;
 }
 
 .titulo__compra {
-    margin-bottom: 1.5em;
+    margin-bottom: 21px;
     font-weight: 700;
     font-size: 18px;
     text-align: center;
@@ -91,27 +92,24 @@ body {
 }
 
 .lista__input p {
-    margin-bottom: 0.5em;
+    margin-bottom: 10px;
 }
 
-.lista__input li {
-    margin: 0.5em 0em;
+.inputs {
+    margin:10px 0px;
 }
 
 .select--transacao {
     width: 100%;
-    padding: 0.5em;
+    padding: 10px;
 }
 
-.listainput__text {
+.input--text {
     width:100%;
-    padding: 0.5em;
+    padding: 10px;
     box-sizing: border-box;
     margin: 0 -2px;
-}
-
-.select-transacao, .listainput__text {
-    margin: 0;    
+    margin: 0px;    
 }
 
 .botao__comprar {
@@ -123,7 +121,7 @@ body {
     font-weight: 400;
     font-size: 14px;
     padding: 7.5px 0px;
-    margin-top: 1em;
+    margin-top: 20px;
 }
 
 .div__extrato {
@@ -135,15 +133,15 @@ body {
 .titulo__extrato {
     font-size: 18px;
     font-weight: 700;
-    margin-bottom: 19px;
+    margin-bottom: 20px;
     text-align: center;
 }
 
-.listasubtitulo__extrato {
+.subtitulo__extrato {
     display: flex;
     justify-content: space-between;
     border-bottom: solid 1px #979797;
-    padding-bottom: 0.5em;
+    padding-bottom: 7px;   
     font-weight: 700;
 }
 
@@ -179,10 +177,10 @@ body {
 }
 
 .operador, .produto, .valor {
-    padding: 0.5em 0em;
+    padding: 7px 0px;
 }
 
-.lista__resultado {
+.total {
     display: flex;
     justify-content: space-between;
     border-top: 1px solid #979797;
@@ -190,26 +188,29 @@ body {
     font-weight: 700;
 }
 
-.titulo-total {
+.subtitulo-total {
     margin: 11px 0% 0% 7%; 
 }
 
-.titulo-valor {
-    margin: 11px 20px 0% 0%; 
+.resultado {
+    margin: 11px 20px 0px 0px; 
 }
 
-.titulo-saldo {
+.saldo {
     text-align: end;
     margin-right: 20px;
     font-size: 10px;
 }
 
-/* CSS para Tablet */
-@media screen and (max-width: 768px) {
-    .header {
-        position: relative;        
+/* CSS para tablet */
+@media screen and (max-width:1154px) {
+    .container {
+        width: 95vw;
     }
+}
 
+/* CSS para Tablet na vertical */
+@media screen and (max-width: 768px) {  
     .container__cabecalho {
         padding: 10px 0px;
     }
@@ -223,6 +224,50 @@ body {
         text-align: center;
     }
 
+     .container__menu {
+        display: none;
+    }
+
+    .container__menu-ativo {
+        display: block;
+        position: absolute;
+        height: 100vh;
+        width: 250px;
+        top: 0;
+        right: 0;
+        background-color: #333333;
+    }
+
+    .botao__fechar-img {
+        display: block;
+        width: 16px;
+        height: 16px;
+        padding: 24px;
+    }
+
+    .menu-link {
+        display: block;
+        color: #FFFFFF;
+        text-align: end;
+        padding: 9px 20px;
+    }
+
+    .menu-link:active {
+        background-color: #C4C4C4;
+        color: #333333;
+    }
+
+    .botao__menulateral {
+        display: block;
+        background-color: #E0E0E0;
+        border: 0px;
+        margin: 0px;
+        padding: 0px;
+        width: 43px;
+        height: 41px;
+        text-align: end;
+    }
+
     .container__transacao {
         display: grid;
         grid-template-columns: 1fr;
@@ -230,95 +275,20 @@ body {
         gap: 40px;
     }
 
-    .container__menu {
-        display: none;
-    }
-
-    .botao__menulateral {
-        display: block;
-        background-color: #E0E0E0;
-        border: 0;
-        margin: 0;
-        padding: 0;
-        width: 43px;
-        height: 41px;
-    }
-
-    .botao__fechar-img {
-        width: 24px;
-        height: 24px;
-    }
-
-    .menu__lateral {
-        display: none;
-        position: absolute;
-        width: 40vw;
-        height: 100vh;
-        right: -100vw;
-        top: 0vh;
-        background-color: #333333;
-        font-size: 16px;
-    }
-
-    .menu__lateral--ativo {
-        display: block;
-        position: absolute;
-        width: 40vw;
-        height: 100vh;
-        right: 0vw;
-        top: 0vh;
-        background-color: #333333;
-        font-size: 16px;  
-    }
-
-    .botao__fechar-img {
-        padding: 1.5em;
-        display: block;
-    }
-
-    .menulateral-opcoes {
-        text-align: end;
-        text-decoration: none;
-        color: #FFFFFF;
-        display: block;
-        padding: 1em;
-    }        
-
-    .menulateral-opcoes:active {
-        background-color: #C4C4C4;
-        color: #333333;
-        transition: 0s;
+    .div__compra {
+        display: flex;
+        flex-direction: column;
     }
 
     .lista__input {
         display: grid;
         grid-template-columns: 0.5fr 1fr 0.5fr;
-        column-gap: 1.5em;
-    }
-
-    .listainput__produto input {
-        width: 100%;
-        box-sizing: border-box;
+        column-gap: 20px;
     }
 
     .botao__comprar {
         width: 200px;
-        justify-self: end;
-    }
-}
-
-/* CSS para tablet */
-@media screen and (max-width:1154px) {
-    .container {
-        width: 95vw;
-    }  
-
-    .div__compra {
-        display: grid;
-    }
-
-    .lista__input {
-        padding: 0;
+        align-self: end;
     }
 }
 
@@ -328,12 +298,12 @@ body {
         margin-top: 20px;
     }
     
-    .menu__lateral--ativo {
+    .container__menu-ativo {
         width: 85vw;
     }
 
     .div__compra {
-        padding: 0;
+        padding: 0px;
         padding-bottom: 28px;
         border: 0;
         width: inherit;
@@ -348,18 +318,13 @@ body {
         display: grid;
         grid-template-columns: auto;
         grid-template-rows: 1fr 1fr 1fr;
-        padding: 0;
-        margin: 0;
+        padding: 0px;
+        margin: 0px;
     }
-    
-    .listainput__text {
-        width: 100%;
-        box-sizing: border-box;
-    }
-
+ 
     .botao__comprar {
         width: 100%;
-        margin: 0em;
+        margin: 0px;
         margin-top: 20px;
     }
 
