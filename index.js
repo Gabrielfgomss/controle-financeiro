@@ -96,7 +96,7 @@ function criaElementos(transacao) {
 // Limpa dados
 function limpaDados() {
     if (extrato.innerText != '') {
-        //alert('Dados apagados com sucesso!');
+        alert('Dados apagados com sucesso!');
         localStorage.clear();
     }
 }
