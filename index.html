@@ -9,7 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-
     <title>Document</title>
 </head>
 <body>
@@ -23,7 +22,7 @@
                 <div class="container__menu">
                     <img src="img/Vector.png" alt="Botão fechar" class="botao__fechar-img">
                     <a href="#" class="menu-link borda">Cadastro de transações</a></li>
-                    <a href="#" class="menu-link">Limpar dados</a>
+                    <a href="index.html" onclick="limpaDados()" class="menu-link">Limpar dados</a>
                 </div>
                 <button class="botao__menulateral"><img src="img/menu.png" alt="Menu lateral"></button> 
             </div>
@@ -35,20 +34,21 @@
                 <ul class="lista__input">
                     <li class="inputs">
                         <p>Tipo de transação</p>
-                        <select class="select--transacao" required>                 
-                            <option value="compra">Compra</option>                 
-                            <option value="venda">Venda</option>             
+                        <select id="select--transacao">                 
+                            <option value="+">Compra</option>                 
+                            <option value="-">Venda</option>             
                         </select>
                     </li>
                     <li class="inputs">
                         <p>Nome da mercadoria</p>
-                        <input type="text" class="input--text mercadoria" placeholder="Input">
+                        <input type="text" class="input--text input-mercadoria" placeholder="Nome da mercadoria">
                     </li>
                     <li class="inputs">
                         <p>Valor</p>
-                        <input type="text" class="input--text input-valor" placeholder="R$ 0,00">
+                        <input type="text" class="input--text input-valor" placeholder="R$ 0,00" onkeypress="testaValor(event)">
                     </li>
-                </ul> 
+                </ul>
+                <!--<input type="submit" class="botao__comprar" value="Adicionar transação">--> 
                 <button class="botao__comprar">Adicionar transação</button>
         </div>
         <div class="div__extrato">
@@ -58,30 +58,18 @@
                 <p class="subtitulo-valor">Valor</p>
             </div>
             <div class="container__lista"> 
-                <ul class="linha">
-                    <li><p class="operador">+</p></li>
-                    <li><p class="produto">Lorem ipsum dolor sit amet consectetur</p></li>
-                    <li><p class="valor">R$ 12.999,99</p></li>
-                </ul>
-                <ul class="linha">
-                    <li><p class="operador">-</p></li>
-                    <li><p class="produto">Quis nostrud exercitation</p></li>
-                    <li><p class="valor">R$ 99,99</p></li>
-                </ul>
-                <ul class="linha">
-                    <li><p class="operador">+</p></li>
-                    <li><p class="produto">Lorem ipsum</p></li>
-                    <li><p class="valor">R$ 9,99</p></li>  
-                </ul> 
+                <span class="msn__span existe">Nenhuma transação cadastrada.</span>
             </div>
             <div class="total">
-                <p class="subtitulo-total">Total</p>
-                <p class="resultado">R$ 12.909,99</p> 
+                <p class="subtitulo-total"></p>
+                <p class="resultado"></p> 
             </div> 
-            <p class="saldo">[LUCRO]</p> 
+            <p class="saldo"></p> 
         </div>
     </section>
+    <script src="javascript/Inputmask-5.x/dist/inputmask.js"></script>
     <script src="index.js"></script>
-
+    <script src="operacao.js"></script>
+    <script src="menuMobile.js"></script>
 </body>
 </html>

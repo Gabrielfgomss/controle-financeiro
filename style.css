@@ -8,11 +8,11 @@ body {
     font-family: var(--fonte-primaria);
     font-weight: 400;
     background-color: #FFFFFF;
+    color: var(--cor-da-fonte);
 }
 
 .cabecalho {
     background-color: #E0E0E0;
-    color: var(--cor-da-fonte);
     font-weight: 600; 
 }
 
@@ -87,7 +87,6 @@ body {
 
 .lista__input  {
     font-size: 14px;
-    color: var(--cor-da-fonte);
     align-items: end;
 }
 
@@ -99,7 +98,7 @@ body {
     margin:10px 0px;
 }
 
-.select--transacao {
+#select--transacao {
     width: 100%;
     padding: 10px;
 }
@@ -176,7 +175,7 @@ body {
     margin: 0px 20px;
 }
 
-.operador, .produto, .valor {
+.linha>p {
     padding: 7px 0px;
 }
 
@@ -201,7 +200,14 @@ body {
     margin-right: 20px;
     font-size: 10px;
 }
-
+.msn__span {
+    text-align: center;
+    padding: 5px;
+    font-weight: 700;
+}
+.existe {
+    display: none;
+}
 /* CSS para tablet */
 @media screen and (max-width:1154px) {
     .container {
@@ -254,7 +260,6 @@ body {
 
     .menu-link:active {
         background-color: #C4C4C4;
-        color: #333333;
     }
 
     .botao__menulateral {
