@@ -3,8 +3,7 @@ const extrato = document.querySelector('.container__lista');
 const itens = JSON.parse(localStorage.getItem('itens')) || [];
 const span = document.querySelector('.msn__span');
 itens.forEach(element => {
-    console.log('Local'+element)
-    criaElementos(element)
+    criaElementos(element);
 });
 // Mensagem de extrato vazio
     if (extrato.innerText == '') {
@@ -17,16 +16,18 @@ const valor = document.querySelector('.input-valor');
 // Clicar no botão
 const botaoAdicionar = document.querySelector('.botao__comprar');
 botaoAdicionar.addEventListener('click', () => {
-    span.classList.add('existe');
     const transacaoValores = {
         compraVenda: compraVenda.value,
         mercadoria: mercadoria.value,
         valor: valor.value
-    } 
+    }
+    // Porque quando eu clico ainda adiciona um valor na string vazia  
+    console.log(valor.value);
     if ((valor.value != '')
     && (mercadoria.value != '')
     && (compraVenda.value != '')) {
             //testaFormulario();
+            span.classList.add('existe');
             criaElementos(transacaoValores);
             itens.push(transacaoValores);
             calcResultado();
@@ -53,7 +54,7 @@ botaoAdicionar.addEventListener('click', () => {
 function testaValor(evento) {
     evento.preventDefault();
     var selector = document.querySelector('.input-valor');
-    var mascara = new Inputmask("R$ 9{1,10}"+",9{1,2}");
+    var mascara = new Inputmask("R$ 9{1,9}"+",99");
     mascara.mask(selector);
 
     /*if (evento.target.value.length == 0) {
@@ -86,15 +87,17 @@ function criaElementos(transacao) {
             itemLinha.classList.add('operador');
         } else if (itemLinha.dataset.id == 1) {
             itemLinha.classList.add('produto');
-        } else if (itemLinha.dataset.id == 2) {
+        } else if ((itemLinha.dataset.id == 2)) {
             itemLinha.classList.add('valor');
         }
+        
         extratoLinha.appendChild(itemLinha);
     }
     extrato.appendChild(extratoLinha);
 }
 // Limpa dados
 function limpaDados() {
+    console.log(extrato.innerText);
     if (extrato.innerText != '') {
         alert('Dados apagados com sucesso!');
         localStorage.clear();

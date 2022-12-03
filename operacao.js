@@ -27,7 +27,7 @@
 // Calcular os resultado final
     resultadoTotal = resultadoCompra + (-resultadoVenda);
 //console.log(resultadoTotal);
-    resultadoSelect.innerHTML = 'R$ ' + (resultadoTotal.toFixed(2));
+    resultadoSelect.innerHTML = resultadoTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 // Selecionar se deu lucro ou prejuizo
     if (resultadoTotal > 0) {
         document.querySelector('.saldo').textContent = '[LUCRO]';
