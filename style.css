@@ -121,6 +121,7 @@ body {
     font-size: 14px;
     padding: 7.5px 0px;
     margin-top: 20px;
+    cursor: pointer;
 }
 
 .div__extrato {

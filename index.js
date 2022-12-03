@@ -2,8 +2,9 @@
 const extrato = document.querySelector('.container__lista');
 const itens = JSON.parse(localStorage.getItem('itens')) || [];
 const span = document.querySelector('.msn__span');
-itens.forEach(element => {
-    criaElementos(element);
+itens.forEach(elemento => {
+    criaElementos(elemento);
+    calcResultado(Object.values(itens));
 });
 // Mensagem de extrato vazio
     if (extrato.innerText == '') {
@@ -19,10 +20,9 @@ botaoAdicionar.addEventListener('click', () => {
     const transacaoValores = {
         compraVenda: compraVenda.value,
         mercadoria: mercadoria.value,
-        valor: valor.value
+        valor: valor.value.replace(/[R$ .]/g,'')
     }
     // Porque quando eu clico ainda adiciona um valor na string vazia  
-    console.log(valor.value);
     if ((valor.value != '')
     && (mercadoria.value != '')
     && (compraVenda.value != '')) {
@@ -30,8 +30,7 @@ botaoAdicionar.addEventListener('click', () => {
             span.classList.add('existe');
             criaElementos(transacaoValores);
             itens.push(transacaoValores);
-            calcResultado();
-            console.log('Dinamico'+transacaoValores);
+            calcResultado(Object.values(itens));
     }
     localStorage.setItem('itens', JSON.stringify(itens));
     mercadoria.value = '';
@@ -56,7 +55,6 @@ function testaValor(evento) {
     var selector = document.querySelector('.input-valor');
     var mascara = new Inputmask("R$ 9{1,9}"+",99");
     mascara.mask(selector);
-
     /*if (evento.target.value.length == 0) {
         evento.target.value += 'R'
     }
@@ -70,9 +68,7 @@ function testaValor(evento) {
 // Criando os novos elementos adicionados na página
 function criaElementos(transacao) {
     // Transformando o objecto em uma array
-    //console.log(transacao);
     const valor = Object.values(transacao);
-    //console.log(valor);
     // Criando a div
     const extratoLinha = document.createElement('div');
     extratoLinha.classList.add('linha');
@@ -89,8 +85,9 @@ function criaElementos(transacao) {
             itemLinha.classList.add('produto');
         } else if ((itemLinha.dataset.id == 2)) {
             itemLinha.classList.add('valor');
+            itemLinha.innerHTML = valor[i].replace(/[,]/g, '.');
+            itemLinha.innerHTML = parseFloat(valor[i]).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
         }
-        
         extratoLinha.appendChild(itemLinha);
     }
     extrato.appendChild(extratoLinha);
@@ -102,4 +99,35 @@ function limpaDados() {
         alert('Dados apagados com sucesso!');
         localStorage.clear();
     }
+}
+// Calcula o resultado
+function calcResultado(elemento) {
+    const resultadoSelect = document.querySelector('.resultado');
+    let resultadoCompra = 0;
+    let resultadoVenda = 0;
+    let resultadoTotal = 0;
+    console.log(elemento)
+// Calcular os valores totais de cada valor, separando por aqueles de compra e venda
+    for (let i = 0; i < elemento.length; i++) {
+        if (elemento[i].compraVenda == '+') {
+            let valorCompra = parseFloat(elemento[i].valor.replace(/[,]+/g, '.')); 
+            resultadoCompra = valorCompra + resultadoCompra;
+        }
+        if (elemento[i].compraVenda == '-') {
+            let valorVenda = parseFloat(elemento[i].valor.replace(/[,]+/g, '.'));
+            resultadoVenda = valorVenda + resultadoVenda;
+        }
+        }
+// Calcular os resultado final
+    resultadoTotal = resultadoCompra - resultadoVenda;
+    resultadoSelect.innerHTML = resultadoTotal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+// Selecionar se deu lucro ou prejuizo
+    if (resultadoTotal >= 0) {
+        document.querySelector('.saldo').textContent = '[LUCRO]';
+    } else {
+        document.querySelector('.saldo').textContent = '[PREJUÍZO]';
+    }
+// Salvar resultado e saldo no localStorage
+    localStorage.setItem('resultado', resultadoSelect.innerHTML);
+    localStorage.setItem('saldo', document.querySelector('.saldo').textContent);
 }
