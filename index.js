@@ -20,7 +20,7 @@ botaoAdicionar.addEventListener('click', () => {
     const transacaoValores = {
         compraVenda: compraVenda.value,
         mercadoria: mercadoria.value,
-        valor: valor.value.replace(/[R$ .]/g,'')
+        valor: valor.value.replace(/[R$ ]/g,'')
     }
     // Porque quando eu clico ainda adiciona um valor na string vazia  
     if ((valor.value != '')
@@ -85,8 +85,8 @@ function criaElementos(transacao) {
             itemLinha.classList.add('produto');
         } else if ((itemLinha.dataset.id == 2)) {
             itemLinha.classList.add('valor');
-            itemLinha.innerHTML = valor[i].replace(/[,]/g, '.');
-            itemLinha.innerHTML = parseFloat(valor[i]).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+            const valorFloat = parseFloat(valor[i].replace(/[,]/g, '.'));
+            itemLinha.innerHTML = valorFloat.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
         }
         extratoLinha.appendChild(itemLinha);
     }
