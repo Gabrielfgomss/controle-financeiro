@@ -12,7 +12,7 @@ function mensagemExtrato() {
     `;
 }
 //Verifica o localStorage
-const itens = JSON.parse(localStorage.getItem('itens')) || [];
+var itens = JSON.parse(localStorage.getItem('itens')) || [];
 if (itens.length > 0) {
     document.querySelector('.resultado').innerText = localStorage.getItem('resultado');
     document.querySelector('.saldo').textContent = localStorage.getItem('saldo');
