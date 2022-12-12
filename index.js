@@ -1,131 +1,119 @@
-//Variaveis gerais e localStorage
-const extrato = document.querySelector('.container__lista');
-const itens = JSON.parse(localStorage.getItem('itens')) || [];
-const span = document.querySelector('.msn__span');
-itens.forEach(elemento => {
-    criaElementos(elemento);
-    calcResultado(Object.values(itens));
-});
-// Mensagem de extrato vazio
-    if (extrato.innerText == '') {
-        span.classList.remove('existe');
-    }
-// Selecionar o tipo de transação, o nome da mercadoria e seu valor
-const compraVenda = document.getElementById('select--transacao');
-const mercadoria = document.querySelector('.input-mercadoria');
+//Variaveis globais
+const operador = document.getElementById('select--transacao');
+const produto = document.querySelector('.input-mercadoria');
 const valor = document.querySelector('.input-valor');
-// Clicar no botão
+const extratoLista = document.querySelector('.container__lista');
 const botaoAdicionar = document.querySelector('.botao__comprar');
+// Mensagem de vazio
+mensagemExtrato();
+function mensagemExtrato() {
+    extratoLista.innerHTML = `
+        <span id="msn__extrato" class="aparece">Nenhuma transação cadastrada.</span>
+    `;
+}
+//Verifica o localStorage
+const itens = JSON.parse(localStorage.getItem('itens')) || [];
+if (itens.length > 0) {
+    document.querySelector('.resultado').innerText = localStorage.getItem('resultado');
+    document.querySelector('.saldo').textContent = localStorage.getItem('saldo');
+    criaLinha(itens);
+}
+// Clicar no botão
 botaoAdicionar.addEventListener('click', () => {
-    const transacaoValores = {
-        compraVenda: compraVenda.value,
-        mercadoria: mercadoria.value,
-        valor: parseFloat(valor.value.replace(/[R$ ]/g,'').replace(/[,]/g, '.'))
+    if ((produto.value != '') && (valor.value != '')) {
+        var item = [{
+            operador: operador.value, 
+            produto: produto.value, 
+            valor: parseFloat(valor.value.replace(/[R$ .]/g,'').replace(/[,]/g, '.')),
+        }];
+        verificacaoDoValor();
+        itens.push(item[0]);
+        localStorage.setItem('itens', JSON.stringify(itens));
+        criaLinha(item);
+        calcResultado();
+    } else {
+        verificacaoDoValor();
     }
-    // Porque quando eu clico ainda adiciona um valor na string vazia  
-    if ((valor.value != '')
-    && (mercadoria.value != '')
-    && (compraVenda.value != '')) {
-            //testaFormulario();
-            span.classList.add('existe');
-            criaElementos(transacaoValores);
-            itens.push(transacaoValores);
-            calcResultado(Object.values(itens));
-    }
-    localStorage.setItem('itens', JSON.stringify(itens));
-    mercadoria.value = '';
-    valor.value = ''; 
 }
 )
-
-// Validação do formulário
-/*function testaFormulario () {
-    var mercadoriaValue = /[^a-zA-z]+/g;
-    var valorValue = /[^0-9,R$ ]+/g;
-    if ((valorValue.test(transacao.valor.value))
-    || (mercadoriaValue.test(transacao.mercadoria.value))) {
-        console.log('Caracteres inválidos');
-    } else {
-        criaElementos(transacao);
-    }
-}*/
-// Máscara e função para não permitir letras no input Valor
-function testaValor(evento) {
-    evento.preventDefault();
-    var selector = document.querySelector('.input-valor');
-    var mascara = new Inputmask("R$ 9{1,9}"+",99");
-    mascara.mask(selector);
-    /*if (evento.target.value.length == 0) {
-        evento.target.value += 'R'
-    }
-    if (evento.target.value.length == 1) {
-        evento.target.value += '$ '
-    }*/
-    if ((/[0-9,R$ ]+/g).test(evento.key)) {
-        evento.target.value += evento.key;
+// Valor invalido
+function verificacaoDoValor() {
+    if (valor.value == '') {
+        valor.placeholder = 'Insira algum valor!';
+        valor.classList.add('input-erro');
+    } 
+    if (produto.value == '') {
+        produto.placeholder = 'Insira algum valor!';
+        produto.classList.add('input-erro');
+    } 
+    if ((valor.value != '') && (produto.value != '')) {
+        valor.classList.remove('input-erro');
+        valor.placeholder = 'Nome da mercadoria';
+        produto.classList.remove('input-erro');
+        produto.placeholder = 'R$ 0,00';
+        produto.value = '';
+        valor.value = ''; 
     }
 }
-// Criando os novos elementos adicionados na página
-function criaElementos(transacao) {
-    // Transformando o objecto em uma array
-    const valor = Object.values(transacao);
-    // Criando a div
-    const extratoLinha = document.createElement('div');
-    extratoLinha.classList.add('linha');
-    // Criando os paragrafos para cada valor na array
-    for (let i = 0; i < valor.length; i++) {
-        var itemLinha = document.createElement('p');
-        itemLinha.innerHTML = valor[i];
-        //console.log(itemLinha);
-        itemLinha.dataset.id = i;
-    // Criando as respectivas classes para seus respectivos paragrafos
-        if (itemLinha.dataset.id == 0) {
-            itemLinha.classList.add('operador');
-        } else if (itemLinha.dataset.id == 1) {
-            itemLinha.classList.add('produto');
-        } else if ((itemLinha.dataset.id == 2)) {
-            itemLinha.classList.add('valor');
-            itemLinha.innerHTML = valor[i].toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
-        }
-        extratoLinha.appendChild(itemLinha);
+// Máscara e função para não permitir letras no input Valor
+function maskValor(event) {
+    const onlyDigits = event.target.value
+          // Transformando a String digitada em uma Array
+        .split("")
+          // Filtrando a Array e pegando apenas o que for digito
+        .filter(s => /\d/.test(s))
+          //Juntando tudo na Array em uma String
+        .join("")
+          // Adicionado os zeros
+        .padStart(3, "0");
+    const digitsFloat = onlyDigits.slice(0, -2) + "." + onlyDigits.slice(-2)
+    event.target.value = maskCurrency(digitsFloat);
     }
-    extrato.appendChild(extratoLinha);
+    function maskCurrency(valor, locale = 'pt-BR', currency = 'BRL') {
+        return new Intl.NumberFormat(locale, {
+            style: 'currency',
+            currency
+        }).format(valor)
+    }      
+// Criando os novos elementos adicionados na página
+function criaLinha(itemInput) {
+    /*document.getElementById('msn__extrato').classList.add('desaparece')
+    itemInput.forEach(objeto => {
+        const linha = document.createElement('div');
+        linha.classList.add('linha');
+        for (const [key, value] of Object.entries(objeto)) {
+            var objetoDaLinha = document.createElement('p');
+            if (Number.isNaN([value])) {
+                objetoDaLinha.innerHTML = [value];
+            } else {
+                objetoDaLinha.innerHTML = [value].toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+            }
+            objetoDaLinha.classList.add([key]);
+            linha.appendChild(objetoDaLinha);
+        }
+        extratoLista.appendChild(linha);
+        calcResultado() 
+    })*/
+    document.getElementById('msn__extrato').classList.add('desaparece');
+    itemInput.forEach(element => {
+        extratoLista.innerHTML += `
+        <div class="linha">
+            <p class="operador">${element.operador}</p>
+            <p class="produto">${element.produto}</p>
+            <p class="valor">${element.valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</p>
+        </div>
+        `
+    })
+    //calcResultado();
 }
 // Limpa dados
-function limpaDados() {
-    console.log(extrato.innerText);
-    if (extrato.innerText != '') {
-        alert('Dados apagados com sucesso!');
+function limpaDados(evento) {
+    evento.preventDefault();
+    if (confirm('Você deseja apagar todos os dados?')) {
         localStorage.clear();
+        itens = [];
+        mensagemExtrato();
+        document.querySelector('.resultado').innerText = 'R$ 0,00';
+        document.querySelector('.saldo').textContent = '';
     }
-}
-// Calcula o resultado
-function calcResultado(elemento) {
-    const resultadoSelect = document.querySelector('.resultado');
-    let resultadoCompra = 0;
-    let resultadoVenda = 0;
-    let resultadoTotal = 0;
-// Calcular os valores totais de cada valor, separando por aqueles de compra e venda
-    for (let i = 0; i < elemento.length; i++) {
-        if (elemento[i].compraVenda == '+') {
-            let valorCompra = parseFloat(elemento[i].valor); 
-            resultadoCompra = valorCompra + resultadoCompra;
-        }
-        if (elemento[i].compraVenda == '-') {
-            let valorVenda = parseFloat(elemento[i].valor);
-            resultadoVenda = valorVenda + resultadoVenda;
-        }
-        }
-// Calcular os resultado final
-    resultadoTotal = resultadoCompra - resultadoVenda;
-    resultadoSelect.innerHTML = resultadoTotal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
-// Selecionar se deu lucro ou prejuizo
-    if (resultadoTotal >= 0) {
-        document.querySelector('.saldo').textContent = '[LUCRO]';
-    } else {
-        document.querySelector('.saldo').textContent = '[PREJUÍZO]';
-    }
-// Salvar resultado e saldo no localStorage
-    localStorage.setItem('resultado', resultadoSelect.innerHTML);
-    localStorage.setItem('saldo', document.querySelector('.saldo').textContent);
 }

@@ -22,7 +22,7 @@
                 <div class="container__menu">
                     <img src="img/Vector.png" alt="Botão fechar" class="botao__fechar-img">
                     <a href="#" class="menu-link borda">Cadastro de transações</a></li>
-                    <a href="index.html" onclick="limpaDados()" class="menu-link">Limpar dados</a>
+                    <a href="index.html" onclick="limpaDados(event)" class="menu-link">Limpar dados</a>
                 </div>
                 <button class="botao__menulateral"><img src="img/menu.png" alt="Menu lateral"></button> 
             </div>
@@ -41,11 +41,13 @@
                     </li>
                     <li class="inputs">
                         <p>Nome da mercadoria</p>
-                        <input type="text" class="input--text input-mercadoria" placeholder="Nome da mercadoria">
+                        <input type="text" id="erro-input" class="input--text input-mercadoria" placeholder="Nome da mercadoria">
+                        <p class="msn__erro"></p>
                     </li>
                     <li class="inputs">
                         <p>Valor</p>
-                        <input type="text" class="input--text input-valor" placeholder="R$ 0,00" onkeypress="testaValor(event)">
+                        <input type="text" id="erro-input" class="input--text input-valor" placeholder="R$ 0,00" onInput="maskValor(event)">
+                        <p class="msn__erro"></p>
                     </li>
                 </ul>
                 <button class="botao__comprar">Adicionar transação</button>
@@ -56,19 +58,17 @@
                 <p class="subtitulo-mercadoria">Mercadoria</p>
                 <p class="subtitulo-valor">Valor</p>
             </div>
-            <div class="container__lista"> 
-                <span class="msn__span existe">Nenhuma transação cadastrada.</span>
-            </div>
+            <div class="container__lista"></div>
             <div class="total">
                 <p class="subtitulo-total">Total</p>
                 <p class="resultado">R$ 0,00</p> 
             </div> 
             <p class="saldo"></p> 
         </div>
-    </section>
-    <script src="javascript/Inputmask-5.x/dist/inputmask.js"></script>
-    <script src="index.js"></script>
+    </section>    
     <script src="operacao.js"></script>
+    <script src="index.js"></script>
     <script src="menuMobile.js"></script>
+
 </body>
 </html>
