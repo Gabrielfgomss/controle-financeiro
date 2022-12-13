@@ -4,12 +4,12 @@ const produto = document.querySelector('.input-mercadoria');
 const valor = document.querySelector('.input-valor');
 const extratoLista = document.querySelector('.container__lista');
 const botaoAdicionar = document.querySelector('.botao__comprar');
-// Mensagem de vazio
-mensagemExtrato();
-function mensagemExtrato() {
+// Mensagem de aviso
+mensagemAviso();
+function mensagemAviso() {
     extratoLista.innerHTML = `
-        <span id="msn__extrato" class="aparece">Nenhuma transação cadastrada.</span>
-    `;
+            <span id="msn__extrato" class="aparece">Nenhuma transação cadastrada.</span>
+        `;
 }
 //Verifica o localStorage
 var itens = JSON.parse(localStorage.getItem('itens')) || [];
@@ -77,8 +77,8 @@ function maskValor(event) {
     }      
 // Criando os novos elementos adicionados na página
 function criaLinha(itemInput) {
-    /*document.getElementById('msn__extrato').classList.add('desaparece')
-    itemInput.forEach(objeto => {
+    document.getElementById('msn__extrato').classList.add('desaparece')
+    /*itemInput.forEach(objeto => {
         const linha = document.createElement('div');
         linha.classList.add('linha');
         for (const [key, value] of Object.entries(objeto)) {
@@ -94,7 +94,6 @@ function criaLinha(itemInput) {
         extratoLista.appendChild(linha);
         calcResultado() 
     })*/
-    document.getElementById('msn__extrato').classList.add('desaparece');
     itemInput.forEach(element => {
         extratoLista.innerHTML += `
         <div class="linha">
@@ -112,7 +111,7 @@ function limpaDados(evento) {
     if (confirm('Você deseja apagar todos os dados?')) {
         localStorage.clear();
         itens = [];
-        mensagemExtrato();
+        mensagemAviso();
         document.querySelector('.resultado').innerText = 'R$ 0,00';
         document.querySelector('.saldo').textContent = '';
     }

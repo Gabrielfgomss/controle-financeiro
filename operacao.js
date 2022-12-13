@@ -1,18 +1,12 @@
 // Calcula o resultado
 function calcResultado() {
+    var listaItens = itens;
     var saldo = 0;
-    var listaItens = JSON.parse(localStorage.getItem('itens'));
-
     listaItens.forEach(i => {
-        if(i.operador == '+') {
-           saldo = saldo + i.valor;
-        }
-        if (i.operador == '-') {
-           saldo = saldo - i.valor
-        }
+        saldo = i.operador == '+' ? saldo + i.valor: saldo - i.valor;
     });
-
     localStorage.setItem('resultado', saldo.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'}));
+    
     document.querySelector('.resultado').innerText = saldo.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'});
 
     if (saldo > 0) {
