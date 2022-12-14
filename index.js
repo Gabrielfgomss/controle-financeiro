@@ -8,8 +8,8 @@ const botaoAdicionar = document.querySelector('.botao__comprar');
 mensagemAviso();
 function mensagemAviso() {
     extratoLista.innerHTML = `
-            <span id="msn__extrato" class="aparece">Nenhuma transação cadastrada.</span>
-        `;
+        <span id="msn__extrato" class="aparece">Nenhuma transação cadastrada.</span>
+    `;
 }
 //Verifica o localStorage
 var itens = JSON.parse(localStorage.getItem('itens')) || [];
@@ -21,16 +21,15 @@ if (itens.length > 0) {
 // Clicar no botão
 botaoAdicionar.addEventListener('click', () => {
     if ((produto.value != '') && (valor.value != '')) {
-        var item = [{
+        var item = {
             operador: operador.value, 
             produto: produto.value, 
             valor: parseFloat(valor.value.replace(/[R$ .]/g,'').replace(/[,]/g, '.')),
-        }];
+        };
         verificacaoDoValor();
-        itens.push(item[0]);
+        itens.push(item);
         localStorage.setItem('itens', JSON.stringify(itens));
-        criaLinha(item);
-        calcResultado();
+        criaLinha();
     } else {
         verificacaoDoValor();
     }
@@ -76,25 +75,9 @@ function maskValor(event) {
         }).format(valor)
     }      
 // Criando os novos elementos adicionados na página
-function criaLinha(itemInput) {
-    document.getElementById('msn__extrato').classList.add('desaparece')
-    /*itemInput.forEach(objeto => {
-        const linha = document.createElement('div');
-        linha.classList.add('linha');
-        for (const [key, value] of Object.entries(objeto)) {
-            var objetoDaLinha = document.createElement('p');
-            if (Number.isNaN([value])) {
-                objetoDaLinha.innerHTML = [value];
-            } else {
-                objetoDaLinha.innerHTML = [value].toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
-            }
-            objetoDaLinha.classList.add([key]);
-            linha.appendChild(objetoDaLinha);
-        }
-        extratoLista.appendChild(linha);
-        calcResultado() 
-    })*/
-    itemInput.forEach(element => {
+function criaLinha() {
+    extratoLista.innerHTML = '';
+    itens.forEach(element => {
         extratoLista.innerHTML += `
         <div class="linha">
             <p class="operador">${element.operador}</p>
@@ -103,7 +86,22 @@ function criaLinha(itemInput) {
         </div>
         `
     })
-    //calcResultado();
+    //calcula resultado
+    var saldo = 0;
+    itens.forEach(i => {
+        saldo = i.operador == '+' ? saldo + i.valor: saldo - i.valor;
+    });
+    document.querySelector('.resultado').innerText = saldo.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'});
+    localStorage.setItem('resultado', saldo.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'}));
+    // Resultado de lucro ou prejuízo
+    if (saldo > 0) {
+        document.querySelector('.saldo').textContent = '[LUCRO]';
+    } else if (saldo < 0 ) {
+        document.querySelector('.saldo').textContent = '[PREJUÍZO]';
+    } else if (saldo == 0) {
+        document.querySelector('.saldo').textContent = '';
+    }
+    localStorage.setItem('saldo', document.querySelector('.saldo').textContent);
 }
 // Limpa dados
 function limpaDados(evento) {
