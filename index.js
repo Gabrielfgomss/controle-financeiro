@@ -82,7 +82,7 @@ function criaLinha() {
         <div class="linha">
             <p class="operador">${element.operador}</p>
             <p class="produto">${element.produto}</p>
-            <p class="valor">${element.valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</p>
+            <p class="valor">${maskCurrency(element.valor)}</p>
         </div>
         `
     })
@@ -91,8 +91,8 @@ function criaLinha() {
     itens.forEach(i => {
         saldo = i.operador == '+' ? saldo + i.valor: saldo - i.valor;
     });
-    document.querySelector('.resultado').innerText = saldo.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'});
-    localStorage.setItem('resultado', saldo.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'}));
+    document.querySelector('.resultado').innerText = maskCurrency(saldo);
+    localStorage.setItem('resultado', maskCurrency(saldo));
     // Resultado de lucro ou prejuízo
     if (saldo > 0) {
         document.querySelector('.saldo').textContent = '[LUCRO]';
