@@ -2,7 +2,7 @@ class MercadoriaView {
     #lista;
     #resultado;
     #menu;
-    #botaoMenu
+    
 
     constructor() {
 
@@ -10,14 +10,15 @@ class MercadoriaView {
         this.#lista = $('.container__lista');
         this.#resultado = $('.resultado');
         this.#menu = $('.container__menu');
-        this.#botaoMenu = $('.botao__menulateral')
+        
     }
 
     templateLista(transacoes) {
-
+        console.log(transacoes)
         if (transacoes.length == 0) {
 
             this.#lista.innerHTML = '<span id="msn__extrato" class="aparece">Nenhuma transação cadastrada.</span>';
+            this.#resultado.innerText = 'R$ 0,00'
         } else {
 
             this.#lista.innerHTML =
@@ -51,7 +52,9 @@ class MercadoriaView {
         } else if (windowWidth < 768){
 
             this.#menu.innerHTML = `
-                <button class="botao__abrir" onclick="mercadoriaController.abrirOuFecharMenu(event)"><img src="img/menu.png" alt="Abrir menu"></button> 
+                <button class="botao__abrir" onclick="mercadoriaController.abrirOuFecharMenu(event)">
+                    <img src="img/menu.png" alt="Abrir menu">
+                </button> 
                 
             `
         }
@@ -62,7 +65,9 @@ class MercadoriaView {
         if(altString == 'Abrir menu') {
             this.#menu.classList.add('container__menu-ativo');
             this.#menu.innerHTML = `
-                <button class="botao__abrir" onclick="mercadoriaController.abrirOuFecharMenu(event)"><img class="botao__fechar" src="img/Vector.png" alt="Fechar menu"></button>
+                <button class="botao__abrir" onclick="mercadoriaController.abrirOuFecharMenu(event)">
+                    <img class="botao__fechar" src="img/Vector.png" alt="Fechar menu">
+                </button>
                 <a href="#" class="menu-link borda">Cadastro de transações</a>
                 <button onclick="mercadoriaController.limparDados(event)" class="menu__botao">Limpar dados</button>
         `  
@@ -70,7 +75,9 @@ class MercadoriaView {
 
             this.#menu.classList.remove('container__menu-ativo');
             this.#menu.innerHTML = `
-                <button class="botao__abrir" onclick="mercadoriaController.abrirOuFecharMenu(event)"><img src="img/menu.png" alt="Abrir menu"></button>  
+                <button class="botao__abrir" onclick="mercadoriaController.abrirOuFecharMenu(event)">
+                    <img src="img/menu.png" alt="Abrir menu">
+                </button>  
             `
         }
     }

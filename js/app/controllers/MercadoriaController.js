@@ -11,30 +11,29 @@ class MercadoriaController {
         this.#inputTipo = $('#select--transacao');
         this.#inputNome = $('.input-mercadoria');
         this.#inputValor = $('.input-valor');
-
-        this.#transacao = new Transacao();
+        
         this.#mercadoriaView = new MercadoriaView();
-
-        if(localStorage.length == 0) {
-            this.#mercadoriaView.templateLista(this.#transacao.transacao)
-        } else {
-            this.#mercadoriaView.templateLista(this.#transacao.itens)
-        }
+        
+        this.#transacao = new Bind(
+            new Transacao(),
+            this.#mercadoriaView,
+            ['criarTransacao', 'apagarLista']
+        )
+        
         this.#mercadoriaView.templateMenu(window.screen.width)
     }
 
     
     criarLista(event) {
-
+        console.log(this.#transacao)
         event.preventDefault();
 
         if (ValidacaoHelper.seOsValoresExistem(this.#inputNome, this.#inputValor)) {
             
             this.#transacao.criarTransacao(this.#adicionarValores());
-            this.#mercadoriaView.templateLista(this.#transacao.transacao);
+            
             this.#limpaFormulario()
-            this.#transacao.localStorage(this.#transacao.transacao)
-        } 
+        }
     }
 
     #adicionarValores() {
