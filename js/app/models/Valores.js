@@ -1,28 +1,26 @@
 class Valores {
-    #tipo;
-    #nome;
-    #valor;
-    
+
     constructor(tipo, nome, valor) {
 
-        this.#tipo = tipo;
-        this.#nome = nome;
-        this.#valor = valor;    
+        this._tipo = tipo;
+        this._nome = nome;
+        this._valor = valor;    
+        Object.freeze(this)
     }
 
     get tipo() {
         
-        return this.#tipo
+        return this._tipo
     }
 
     get nome() {
 
-        return this.#nome
+        return this._nome
     }
 
     get valor() {
 
-        return this.#valor
+        return this._valor
     }
 
 }

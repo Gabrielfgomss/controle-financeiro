@@ -14,28 +14,28 @@ class MercadoriaView {
     }
 
     templateLista(transacoes) {
-        console.log(transacoes)
-        if (transacoes.length == 0) {
+        console.log(transacoes.transacao.length)
+        if (transacoes.transacao.length == 0) {
 
             this.#lista.innerHTML = '<span id="msn__extrato" class="aparece">Nenhuma transação cadastrada.</span>';
             this.#resultado.innerText = 'R$ 0,00'
         } else {
 
             this.#lista.innerHTML =
-                transacoes.map((transacao) => `
+                transacoes.transacao.map((transacao) => `
                     <div class="linha">
-                        <p class="operador">${transacao.tipo}</p>
-                        <p class="produto">${transacao.nome}</p>
-                        <p class="valor">${transacao.valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</p>
+                        <p class="operador">${transacao._tipo}</p>
+                        <p class="produto">${transacao._nome}</p>
+                        <p class="valor">${transacao._valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</p>
                     </div>
                 `).join('');
 
             this.#resultado.innerText =
-                transacoes.reduce(
+                transacoes.transacao.reduce(
                     (total, transacao) =>
                         transacao.tipo == '+' ?
-                            total + Number(transacao.valor) :
-                            total - Number(transacao.valor), 0
+                            total + Number(transacao._valor) :
+                            total - Number(transacao._valor), 0
                 ).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
         }
     }
