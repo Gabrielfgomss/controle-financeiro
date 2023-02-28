@@ -1,72 +1,92 @@
 class MercadoriaController {
-    #inputTipo;
-    #inputNome;
-    #inputValor;
-    #transacao;
-    #mercadoriaView;
 
     constructor() {
 
         let $ = document.querySelector.bind(document);
-        this.#inputTipo = $('#select--transacao');
-        this.#inputNome = $('.input-mercadoria');
-        this.#inputValor = $('.input-valor');
-        
-        this.#mercadoriaView = new MercadoriaView();
-        
-        this.#transacao = new Bind(
+        this._inputTipo = $('#select--transacao');
+        this._inputNome = $('.input-mercadoria');
+        this._inputValor = $('.input-valor');
+
+        this._mercadoriaView = new MercadoriaView();
+
+        this._transacao = new Bind(
             new Transacao(),
-            this.#mercadoriaView,
+            this._mercadoriaView,
             ['criarTransacao', 'apagarLista']
         )
-        
-        this.#mercadoriaView.templateMenu(window.screen.width)
+
+        this._mercadoriaView.templateMenu(window.screen.width)
+
+        ConnectionFactory
+            .getConnection()
+            .then(connection => {
+                new TransacaoDao(connection).listaItens().then(itens => {
+                    itens.forEach(item => {
+                        this._transacao.criarTransacao(item)
+                    })
+                })
+            })
     }
 
-    
+
     criarLista(event) {
-        console.log(this.#transacao)
+
         event.preventDefault();
 
-        if (ValidacaoHelper.seOsValoresExistem(this.#inputNome, this.#inputValor)) {
-            
-            this.#transacao.criarTransacao(this.#adicionarValores());
-            
-            this.#limpaFormulario()
-        }
+        ConnectionFactory
+            .getConnection()
+            .then(connection => {
+
+                let transacao = this._adicionarValores();
+
+                new TransacaoDao(connection)
+                    .adiciona(transacao)
+                    .then(() => {
+
+                        if (ValidacaoHelper.seOsValoresExistem(this._inputNome, this._inputValor)) {
+                            this._transacao.criarTransacao(transacao);
+                            this._limpaFormulario()
+                        }
+                    })
+            })
     }
 
-    #adicionarValores() {
-        
+    _adicionarValores() {
+
         return new Valores(
-            this.#inputTipo.value,
-            this.#inputNome.value,
-            ValidacaoHelper.converterTextoParaNumero(this.#inputValor.value)
+            this._inputTipo.value,
+            this._inputNome.value,
+            ValidacaoHelper.converterTextoParaNumero(this._inputValor.value)
+
         )
     }
 
-    #limpaFormulario() {
+    _limpaFormulario() {
 
-        this.#inputValor.value = '';
-        this.#inputNome.value = '';
-        this.#inputTipo.focus();
+        this._inputValor.value = '';
+        this._inputNome.value = '';
+        this._inputTipo.focus();
     }
 
     limparDados(event) {
-
+        
         event.preventDefault();
-        this.#transacao.apagarLista();
-        localStorage.clear();
-        this.#mercadoriaView.templateLista(this.#transacao.transacao)
+        ConnectionFactory
+            .getConnection()
+            .then(connection => new TransacaoDao(connection))
+            .then(dao => {
+                this._transacao.apagarLista();
+                dao.apagarItens();
+            })
     }
 
     mostrarMenu(event) {
-        
-        this.#mercadoriaView.templateMenu(event);
+
+        this._mercadoriaView.templateMenu(event);
     }
 
     abrirOuFecharMenu(event) {
-        
-        this.#mercadoriaView.aoClicarNoMenu(event.target.alt)
+
+        this._mercadoriaView.aoClicarNoMenu(event.target.alt)
     }
 }
