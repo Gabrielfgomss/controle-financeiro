@@ -1,3 +1,11 @@
+import { MercadoriaView } from "../views/MercadoriaView.js";
+import { Transacao } from "../models/Transacao.js";
+import { Bind } from "../helpers/Bind.js";
+import { ConnectionFactory } from "../services/ConnectionFactory.js";
+import { TransacaoDao } from "../dao/TransacaoDao.js";
+import { ValidacaoHelper } from "../helpers/ValidacaoHelper.js";
+import { Valores } from "../models/Valores.js";
+
 class MercadoriaController {
 
     constructor() {
@@ -15,6 +23,10 @@ class MercadoriaController {
             ['criarTransacao', 'apagarLista']
         )
 
+        this._init();
+    }
+
+    _init() {
         this._mercadoriaView.templateMenu(window.screen.width)
 
         ConnectionFactory
@@ -26,11 +38,11 @@ class MercadoriaController {
                     })
                 })
             })
+
     }
 
-
     criarLista(event) {
-
+        
         event.preventDefault();
 
         ConnectionFactory
@@ -38,16 +50,14 @@ class MercadoriaController {
             .then(connection => {
 
                 let transacao = this._adicionarValores();
-
-                new TransacaoDao(connection)
-                    .adiciona(transacao)
-                    .then(() => {
-
-                        if (ValidacaoHelper.seOsValoresExistem(this._inputNome, this._inputValor)) {
+                if (ValidacaoHelper.seOsValoresExistem(this._inputNome, this._inputValor)) {
+                    new TransacaoDao(connection)
+                        .adiciona(transacao)
+                        .then(() => {
                             this._transacao.criarTransacao(transacao);
                             this._limpaFormulario()
-                        }
-                    })
+                        })
+                }
             })
     }
 
@@ -69,8 +79,9 @@ class MercadoriaController {
     }
 
     limparDados(event) {
-        
+
         event.preventDefault();
+
         ConnectionFactory
             .getConnection()
             .then(connection => new TransacaoDao(connection))
@@ -89,4 +100,11 @@ class MercadoriaController {
 
         this._mercadoriaView.aoClicarNoMenu(event.target.alt)
     }
+}
+
+let mercadoriaController = new MercadoriaController();
+
+export function currentInstance() {
+
+    return mercadoriaController;
 }

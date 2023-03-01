@@ -1,9 +1,7 @@
-class ValidacaoHelper {
-    #form
-
+export class ValidacaoHelper {
+    
     constructor() {
 
-        this.#form = document.querySelector('form').elements;
     }
 
     static seOsValoresExistem(produto, valor) {

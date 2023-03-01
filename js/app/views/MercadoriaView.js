@@ -1,27 +1,32 @@
-class MercadoriaView {
-    #lista;
-    #resultado;
-    #menu;
-    
+import { currentInstance } from "../controllers/MercadoriaController.js";
+
+export class MercadoriaView {
 
     constructor() {
 
         let $ = document.querySelector.bind(document);
-        this.#lista = $('.container__lista');
-        this.#resultado = $('.resultado');
-        this.#menu = $('.container__menu');
+        this._lista = $('.container__lista');
+        this._resultado = $('.resultado');
+        this._menu = $('.container__menu');
         
+        this._menu.addEventListener('click', function(event) {
+
+            if(event.target.nodeName == 'BUTTON') {
+
+                currentInstance().limparDados(event)
+            }
+        })
     }
 
     templateLista(transacoes) {
-        console.log(transacoes.transacao.length)
+        
         if (transacoes.transacao.length == 0) {
 
-            this.#lista.innerHTML = '<span id="msn__extrato" class="aparece">Nenhuma transação cadastrada.</span>';
-            this.#resultado.innerText = 'R$ 0,00'
+            this._lista.innerHTML = '<span id="msn__extrato" class="aparece">Nenhuma transação cadastrada.</span>';
+            this._resultado.innerText = 'R$ 0,00'
         } else {
 
-            this.#lista.innerHTML =
+            this._lista.innerHTML =
                 transacoes.transacao.map((transacao) => `
                     <div class="linha">
                         <p class="operador">${transacao._tipo}</p>
@@ -30,7 +35,7 @@ class MercadoriaView {
                     </div>
                 `).join('');
 
-            this.#resultado.innerText =
+            this._resultado.innerText =
                 transacoes.transacao.reduce(
                     (total, transacao) =>
                         transacao.tipo == '+' ?
@@ -43,15 +48,15 @@ class MercadoriaView {
     templateMenu(windowWidth) {
 
         if (windowWidth > 768) {
-            this.#menu.innerHTML = `
+            this._menu.innerHTML = `
             
                 <a href="#" class="menu-link borda">Cadastro de transações</a>
-                <button onclick="mercadoriaController.limparDados(event)" class="menu__botao">Limpar dados</button>
+                <button class="menu__botao">Limpar dados</button>
             `;
             
         } else if (windowWidth < 768){
 
-            this.#menu.innerHTML = `
+            this._menu.innerHTML = `
                 <button class="botao__abrir" onclick="mercadoriaController.abrirOuFecharMenu(event)">
                     <img src="img/menu.png" alt="Abrir menu">
                 </button> 
@@ -63,8 +68,8 @@ class MercadoriaView {
     aoClicarNoMenu(altString) {
         
         if(altString == 'Abrir menu') {
-            this.#menu.classList.add('container__menu-ativo');
-            this.#menu.innerHTML = `
+            this._menu.classList.add('container__menu-ativo');
+            this._menu.innerHTML = `
                 <button class="botao__abrir" onclick="mercadoriaController.abrirOuFecharMenu(event)">
                     <img class="botao__fechar" src="img/Vector.png" alt="Fechar menu">
                 </button>
@@ -73,8 +78,8 @@ class MercadoriaView {
         `  
         } else if(altString == 'Fechar menu') {
 
-            this.#menu.classList.remove('container__menu-ativo');
-            this.#menu.innerHTML = `
+            this._menu.classList.remove('container__menu-ativo');
+            this._menu.innerHTML = `
                 <button class="botao__abrir" onclick="mercadoriaController.abrirOuFecharMenu(event)">
                     <img src="img/menu.png" alt="Abrir menu">
                 </button>  

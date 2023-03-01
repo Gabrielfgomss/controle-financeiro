@@ -1,4 +1,4 @@
-class Valores {
+export class Valores {
 
     constructor(tipo, nome, valor) {
 

@@ -1,4 +1,4 @@
-class Transacao {
+export class Transacao {
 
     constructor() {
         

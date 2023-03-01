@@ -1,4 +1,4 @@
-class ProxyFactory {
+export class ProxyFactory {
 
     static createProxy(objetoProxy, props, acaoExecutada) {
 
@@ -10,12 +10,11 @@ class ProxyFactory {
 
                     return function () {
 
-                        console.log(`${propName} interceptando prop`)
                         Reflect.apply(target[propName], target, arguments)
                         return acaoExecutada(target)
                     }
                 }
-                console.log(target[propName])
+                
                 return target[propName]
             }
         })

@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="style/style.css">
     <title>Document</title>
 </head>
-<body onresize="mercadoriaController.mostrarMenu(event.target.innerWidth)">
+<body>
     <header class="cabecalho">
         <section class="container">
             <div class="container__cabecalho">
@@ -28,7 +28,7 @@
     <section class="container container__transacao">    
         <div class="div__compra">
                 <h1 class="titulo__compra">Nova transação</h1>
-                <form class="lista__input" onsubmit="mercadoriaController.criarLista(event)">
+                <form class="lista__input">
                     <div class="inputs">
                         <p>Tipo de transação</p>
                         <select id="select--transacao">                 
@@ -43,7 +43,7 @@
                     </div>
                     <div class="inputs">
                         <p>Valor</p>
-                        <input type="text" id="erro-input" class="input--text input-valor" placeholder="R$ 0,00" oninput="ValidacaoHelper.mascaraDoValor(event)">
+                        <input type="text" id="erro-input" class="input--text input-valor" placeholder="R$ 0,00">
                         <p class="msn__erro"></p>
                     </div>
                     <button class="botao__comprar" type="submit">Adicionar transação</button>
@@ -63,19 +63,8 @@
             <p class="saldo"></p> 
         </div>
     </section>    
-
-    <script src="js/app/models/Valores.js"></script>
-    <script src="js/app/models/Transacao.js"></script>
-    <script src="js/app/controllers/MercadoriaController.js"></script>
-    <script src="js/app/views/MercadoriaView.js"></script>
-    <script src="js/app/services/Proxyfactory.js"></script>
-    <script src="js/app/services/ConnectionFactory.js"></script>
-    <script src="js/app/dao/TransacaoDao.js"></script>
-    <script src="js/app/helpers/ValidacaoHelper.js"></script>
-    <script src="js/app/helpers/Bind.js"></script>
-    <script>
-        let mercadoriaController = new MercadoriaController();
-    </script>
+    
+    <script src="/js/app/app.js" type="module"></script>
 
 </body>
 </html>

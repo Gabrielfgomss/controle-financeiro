@@ -1,4 +1,6 @@
-class TransacaoDao {
+import { Valores } from "../models/Valores.js";
+
+export class TransacaoDao {
 
     constructor(connection) {
 
