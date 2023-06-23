@@ -9,7 +9,7 @@ Aplicação para organização de compras e vendas.
 | :rocket: URL         | [https://url-deploy.com.br](https://controle-financeiro-two-steel.vercel.app)
 
 <!-- Inserir imagem com a #vitrinedev ao final do link -->
-![](https://via.placeholder.com/1200x500.png?text=imagem+lindona+do+meu+projeto#vitrinedev)
+![](controle_financeiro.jpeg#vitrinedev)
 
 ## Detalhes do projeto
 
