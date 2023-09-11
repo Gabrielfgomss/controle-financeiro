@@ -5,7 +5,7 @@ Aplicação para organização de compras e vendas.
 | :placard: Vitrine.Dev |     |
 | -------------  | --- |
 | :sparkles: Nome        | Controle Financeiro
-| :label: Tecnologias | |JavaScript, HTML5 e CSS3
+| :label: Tecnologias | JavaScript, HTML5 e CSS3
 | :rocket: URL         | [https://url-deploy.com.br](https://controle-financeiro-two-steel.vercel.app)
 
 <!-- Inserir imagem com a #vitrinedev ao final do link -->
